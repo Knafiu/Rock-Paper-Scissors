@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+    console.log("Hello World")
+    let humanScore = 0
+    let computerScore = 0
+    function getComputerChoice(){
+        const RandomNum = Math.floor(Math.random()*3);
+        if (RandomNum === 0){
+            return "Rock";
+        }  
+        else if (RandomNum === 1){
+            return "Paper";
+        } 
+        else{
+            return "Scissors";
+        }
+    }
+    function getHumanChoice(){
+        let choice = prompt("What is your choice?")
+        return choice
+    }
+    function playRound(humanChoice, ComputerChoice){
+        if (humanChoice.toUpperCase() == ComputerChoice.toUpperCase()){
+            return "Tie";
+        }
+        else if (humanChoice.toUpperCase() === "ROCK" && ComputerChoice === "Scissors"){
+            humanScore+= 1;
+            return "You Win! Rock beats Scissors";
+        }
+        else if (humanChoice.toUpperCase() === "PAPER" && ComputerChoice === "Rock"){
+            humanScore+= 1;
+            return "You Win! Paper beats Rock";
+        }
+        else if (humanChoice.toUpperCase() === "SCISSORS" && ComputerChoice === "Paper"){
+            humanScore+= 1;
+            return "You Win! Scissors beats Paper";
+        }
+        else{
+            computerScore+=1;
+            return "You Lose! " + ComputerChoice + " beat " + humanChoice;
+        }
+
+    }
+
+    function playGame(){
+        for(let i=0;i<5;i++){
+            const humanSelection = getHumanChoice()
+            const computerSelection = getComputerChoice()
+            console.log(playRound(humanSelection, computerSelection));
+        }
+        if (humanScore > computerScore){
+            return "You Won";
+        }
+        else{
+            return "You Lost";
+        }
+    }
+    
+    console.log(playGame())
+    function sumOfTripleEven(array){
+        const even = arr.filter((num)=> num % 2 === 0)
+        const triple = even.map((num)=>num*3)
+        const sum = triple.reduce((sum,curr) => sum+curr)
+        return sum
+    }
+    
+</script>
+</html>
