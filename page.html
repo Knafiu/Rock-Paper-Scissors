@@ -7,7 +7,11 @@
 </head>
 <body>
     <h1>THE TITLE OF YOUR WEBPAGE</h1>
-    <div id="container"></div>
+    <button id="Rock">Rock</button>
+    <button id="Paper">Paper</button>
+    <button id="Scissors">Scissors</button>
+    <div class="res">Results</div>
+
     <script>
         ///get Computer Choice
         function getComputerChoice() {
@@ -21,23 +25,25 @@
                 return "scissors";
             }
         }
-        ///gets User Choice
-        function getHumanChoice() {
-            const choice = prompt("Rock, Paper, or Scissors?");
-            
-            return choice;
-        }
+
+        let humanScore = 0;
+        let computerScore = 0;
         function playGame() {
             // Step 4: Declare score variables inside playGame
-            let humanScore = 0;
-            let computerScore = 0;
+            const result = document.querySelector(".res");
+
+
             function playRound(humanChoice, computerChoice) {
             const human = humanChoice.toLowerCase();     // make human choice case-insensitive
             const computer = computerChoice.toLowerCase();
 
             if (human === computer) {
-            console.log(`It's a tie! You both chose ${human}.`);
-            return;
+                const tie = document.createElement("div");
+                tie.classList.add("tie");
+                tie.textContent = `It's a tie! You both chose ${human}.`;
+                result.appendChild(tie);
+                console.log(`It's a tie! You both chose ${human}.`);
+                return;
             }
             const humanWins =
             (human === "rock" && computer === "scissors") ||
@@ -46,36 +52,51 @@
 
             if (humanWins) {
             humanScore++;
+            const hwin = document.createElement("div");
+            hwin.classList.add("hwin");
+            hwin.textContent = `You win this round! ${human} beats ${computer}.`;
+            result.appendChild(hwin);
             console.log(`You win this round! ${human} beats ${computer}.`);
             } else {
             computerScore++;
+            const cwin = document.createElement('div');
+            cwin.classList.add("cwin");
+            cwin.textContent = `You lose this round! ${computer} beats ${human}.`;
+            result.appendChild(cwin)
             console.log(`You lose this round! ${computer} beats ${human}.`);
             }
             console.log(`Score — You: ${humanScore} | Computer: ${computerScore}`);
-        }
-        for (let i = 0; i < 5; i++) {
-            const humanSelection = getHumanChoice();
-            const computerSelection = getComputerChoice();
-            playRound(humanSelection, computerSelection);
+            checkGameOver();
         }
 
-        console.log("Game over!");
-        if (humanScore > computerScore) {
-        console.log(
-        `You won the game! Final score — You: ${humanScore}, Computer: ${computerScore}`
-        );
-    } else if (computerScore > humanScore) {
-        console.log(
-        `You lost the game. Final score — You: ${humanScore}, Computer: ${computerScore}`
-        );
-    } else {
-        console.log(
-        `The game is a tie! Final score — You: ${humanScore}, Computer: ${computerScore}`
-        );
-    }
+        
+        const rock = document.getElementById("Rock");
+        const paper = document.getElementById("Paper");
+        const scissors = document.getElementById("Scissors");
+        rock.addEventListener("click", () => playRound("rock", getComputerChoice()))
+        scissors.addEventListener('click', ()=> playRound("scissors", getComputerChoice()))
+        paper.addEventListener("click", ()=> playRound("paper", getComputerChoice()))
     
     }
-playGame();
+
+    function checkGameOver(){
+        const result = document.querySelector('.res');
+        if (humanScore === 5){
+        const score = document.createElement('div');
+        score.classList.add('score');
+        score.textContent = "Game Over. You Won!";
+        result.appendChild(score);
+        document.querySelectorAll("button").forEach(btn => btn.disabled = true);
+    }
+    else if (computerScore === 5){
+        const com = document.createElement("div");
+        com.classList.add('com');
+        com.textContent = 'Game Over. You Lost!';
+        result.appendChild(com);
+        document.querySelectorAll("button").forEach(btn => btn.disabled = true);
+    }
+    }
+    playGame()
     </script>
 </body>
 </html>
